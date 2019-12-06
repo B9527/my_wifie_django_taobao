@@ -1,0 +1,53 @@
+#! /usr/bin/env python
+# -*- coding:utf-8 -*-
+"""
+__title__ = ''
+__author__ = 'BY'
+__mtime__ = '2019/12/4'
+"""
+from django.http import HttpResponse
+from django.http import JsonResponse
+from products_app.models import Products, Category
+from django.views import View
+
+from products_app.serializers.products_serializers import ProductsSerializer, CategorySerializer
+
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+
+
+class QueryProducts(View):
+
+    def get(self, request):
+        products_store_on = Products.objects.filter(is_on=1, is_store=1)
+        products_list_on = Products.objects.filter(is_on=1, is_store=0)
+        store_serializer = ProductsSerializer(products_store_on, many=True)
+        no_store_serializer = ProductsSerializer(products_list_on, many=True)
+        return_data = {"main_data": no_store_serializer.data, "home_data": store_serializer.data}
+        return JsonResponse(return_data)
+
+
+class QueryCategoryProducts(View):
+
+    def get(self, request):
+        category_id = request.GET.get("mid", None)
+
+        products_all = Products.objects.filter(is_on=1)
+        if category_id is None:
+            pass
+        else:
+            products_all = products_all.filter(category_id=category_id)
+        products_all_serializer = ProductsSerializer(products_all, many=True)
+        return_data = {"cate_goods_data": products_all_serializer.data, "mid":category_id}
+        return JsonResponse(return_data)
+
+
+class QueryCategory(View):
+
+    def get(self, request):
+        category_id = request.GET.get("mid")
+        category = Category.objects.all()
+        category_serializer = CategorySerializer(category, many=True)
+        return_data = {"left_data": category_serializer.data, "mid": category_id}
+        return JsonResponse(return_data)
