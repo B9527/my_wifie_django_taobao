@@ -32,14 +32,17 @@ class QueryCategoryProducts(View):
 
     def get(self, request):
         category_id = request.GET.get("mid", None)
+        product_name = request.GET.get("name", None)
 
         products_all = Products.objects.filter(is_on=1)
-        if category_id is None:
-            pass
-        else:
+        if category_id is not None:
             products_all = products_all.filter(category_id=category_id)
+
+        if product_name is not None:
+            products_all = products_all.filter(product_name__icontains=product_name)
+
         products_all_serializer = ProductsSerializer(products_all, many=True)
-        return_data = {"cate_goods_data": products_all_serializer.data, "mid":category_id}
+        return_data = {"cate_goods_data": products_all_serializer.data, "mid": category_id}
         return JsonResponse(return_data)
 
 
