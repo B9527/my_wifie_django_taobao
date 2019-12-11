@@ -59,7 +59,7 @@ class QueryCategory(View):
 class GoodsDetailView(View):
     def get(self, request):
         p_id = request.GET.get("p_id")
-        products_one = Products.objects.get(produgetid=p_id)
+        products_one = Products.objects.get(product_id=p_id)
         p_serializer = ProductsSerializer(products_one, many=False)
         return_data = {"goods_data": p_serializer.data, "p_id": p_id}
         return JsonResponse(return_data)
