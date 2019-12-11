@@ -31,7 +31,7 @@ class QueryProducts(View):
 class QueryCategoryProducts(View):
 
     def get(self, request):
-        category_id = request.GET.get("mid", None)
+        category_id = request.GET.get("mId", None)
         product_name = request.GET.get("name", None)
 
         products_all = Products.objects.filter(is_on=1)
@@ -53,4 +53,13 @@ class QueryCategory(View):
         category = Category.objects.all()
         category_serializer = CategorySerializer(category, many=True)
         return_data = {"left_data": category_serializer.data, "mid": category_id}
+        return JsonResponse(return_data)
+
+
+class GoodsDetailView(view):
+    def get(self, request):
+        p_id = request.GET.get("p_id")
+        products_one = Products.objects.filter(product_id=p_id)
+        p_serializer = ProductsSerializer(products_one, many=False)
+        return_data = {"goods_data": p_serializer.data, "p_id": p_id}
         return JsonResponse(return_data)
