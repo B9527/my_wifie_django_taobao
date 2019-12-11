@@ -63,6 +63,7 @@ class GoodsDetailView(View):
         products_one = Products.objects.get(product_id=p_id)
         p_serializer = ProductsSerializer(products_one, many=False)
         goods_data = p_serializer.data
+        image_url_list.append(goods_data['product_img_url'])
         return_data = {"goods_data": goods_data, "p_id": p_id,
-                       'image_url_list': image_url_list.append(goods_data['product_img_url'])}
+                       'image_url_list': image_url_list}
         return JsonResponse(return_data)
