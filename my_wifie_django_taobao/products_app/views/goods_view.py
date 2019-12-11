@@ -56,7 +56,7 @@ class QueryCategory(View):
         return JsonResponse(return_data)
 
 
-class GoodsDetailView(view):
+class GoodsDetailView(View):
     def get(self, request):
         p_id = request.GET.get("p_id")
         products_one = Products.objects.filter(product_id=p_id)
