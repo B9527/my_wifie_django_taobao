@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from products_app.models import Products, Category
 from django.views import View
 
-from products_app.serializers.products_serializers import ProductsSerializer, CategorySerializer
+from products_app.serializers.products_serializers import ProductsSerializer, CategorySerializer, ProductsAllSerializer
 
 
 def index(request):
@@ -61,7 +61,7 @@ class GoodsDetailView(View):
         p_id = request.GET.get("p_id")
         image_url_list = []
         products_one = Products.objects.get(product_id=p_id)
-        p_serializer = ProductsSerializer(products_one, many=False)
+        p_serializer = ProductsAllSerializer(products_one, many=False)
         goods_data = p_serializer.data
         image_url_list.append(goods_data['product_img_url'])
         return_data = {"goods_data": goods_data, "p_id": p_id,
