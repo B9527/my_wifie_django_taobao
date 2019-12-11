@@ -59,7 +59,10 @@ class QueryCategory(View):
 class GoodsDetailView(View):
     def get(self, request):
         p_id = request.GET.get("p_id")
+        image_url_list = []
         products_one = Products.objects.get(product_id=p_id)
         p_serializer = ProductsSerializer(products_one, many=False)
-        return_data = {"goods_data": p_serializer.data, "p_id": p_id}
+        goods_data = p_serializer.data
+        return_data = {"goods_data": goods_data, "p_id": p_id,
+                       'image_url_list': image_url_list.append(goods_data['product_img_url'])}
         return JsonResponse(return_data)
