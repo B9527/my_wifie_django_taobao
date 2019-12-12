@@ -16,6 +16,8 @@ class Category(models.Model):
         return self.category_name
 
     class Meta:
+        verbose_name = '商品分类管理'
+        verbose_name_plural = '商品分类管理'
         db_table = "category"
         unique_together = ["category_name"]
 
@@ -49,6 +51,8 @@ class Products(models.Model):
         return self.product_name
 
     class Meta:
+        verbose_name = '商品管理'
+        verbose_name_plural = '商品管理'
         db_table = "product"
         unique_together = ["product_name"]
 
@@ -65,4 +69,6 @@ class ProductsImage(models.Model):
         return self.image_url
 
     class Meta:
+        verbose_name = '商品图片添加'
+        verbose_name_plural = '商品图片添加'
         db_table = "product_image"
