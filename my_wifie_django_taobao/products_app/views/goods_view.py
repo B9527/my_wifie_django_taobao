@@ -19,7 +19,7 @@ def index(request):
 class QueryProducts(View):
     def get(self, request):
         products_store_on = Products.objects.filter(is_on=1, is_store=1)
-        products_list_on = Products.objects.filter(is_on=1, is_store=0)
+        products_list_on = Products.objects.filter(is_on=1)
         store_serializer = ProductsSerializer(products_store_on, many=True)
         no_store_serializer = ProductsSerializer(products_list_on, many=True)
         return_data = {"main_data": no_store_serializer.data, "home_data": store_serializer.data}
