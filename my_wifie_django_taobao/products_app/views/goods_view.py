@@ -7,9 +7,8 @@ __mtime__ = '2019/12/4'
 """
 from django.http import HttpResponse
 from django.http import JsonResponse
-from products_app.models import Products, Category
+from products_app.models import Products, Category, ProductsImage
 from django.views import View
-
 from products_app.serializers.products_serializers import ProductsSerializer, CategorySerializer, ProductsAllSerializer
 
 
@@ -18,7 +17,6 @@ def index(request):
 
 
 class QueryProducts(View):
-
     def get(self, request):
         products_store_on = Products.objects.filter(is_on=1, is_store=1)
         products_list_on = Products.objects.filter(is_on=1, is_store=0)
@@ -29,7 +27,6 @@ class QueryProducts(View):
 
 
 class QueryCategoryProducts(View):
-
     def get(self, request):
         category_id = request.GET.get("mId", None)
         product_name = request.GET.get("name", None)
@@ -47,7 +44,6 @@ class QueryCategoryProducts(View):
 
 
 class QueryCategory(View):
-
     def get(self, request):
         category_id = request.GET.get("mid")
         category = Category.objects.all()
@@ -63,7 +59,13 @@ class GoodsDetailView(View):
         products_one = Products.objects.get(product_id=p_id)
         p_serializer = ProductsAllSerializer(products_one, many=False)
         goods_data = p_serializer.data
-        image_url_list.append(goods_data['product_img_url'])
+
+        products_image_list = ProductsImage.objects.filter(product_id=p_id)
+        for products_image_obj in products_image_list:
+            image_url_list.append(products_image_obj.image_url)
+
+        if len(image_url_list) == 0:
+            image_url_list.append(products_one.product_img_url)
         return_data = {"goods_data": goods_data, "p_id": p_id,
                        'image_url_list': image_url_list}
         return JsonResponse(return_data)

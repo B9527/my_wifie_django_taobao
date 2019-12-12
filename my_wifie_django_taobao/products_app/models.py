@@ -45,7 +45,7 @@ class Products(models.Model):
     product_img_url = models.CharField(max_length=500, help_text="商品主图")  # 商品主图
     category_id = models.ForeignKey("Category", models.SET_NULL, null=True)  # 分类id
     is_store = models.IntegerField('是否现货', choices=store_status, default=0)
-    is_on = models.IntegerField('是否上架', choices=store_status, default=1)
+    is_on = models.IntegerField('是否上架', choices=is_on_status, default=1)
 
     def __str__(self):
         return self.product_name
