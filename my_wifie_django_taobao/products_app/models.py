@@ -63,10 +63,10 @@ class ProductsImage(models.Model):
     """
     image_id = models.AutoField(primary_key=True)  # 图片id
     product = models.ForeignKey("Products", on_delete=models.CASCADE)
-    image_url = models.CharField(max_length=500, help_text="商品图片，一个商品展示多个图片，在这里一个个添加")
+    image_url = models.ImageField(upload_to='shop_image', verbose_name='图片', null=True)
 
     def __str__(self):
-        return self.image_url
+        return self.product.product_name + "/"+self.image_url.name.split('/')[1]
 
     class Meta:
         verbose_name = '商品图片'
