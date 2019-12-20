@@ -62,7 +62,7 @@ class GoodsDetailView(View):
 
         products_image_list = ProductsImage.objects.filter(product_id=p_id)
         for products_image_obj in products_image_list:
-            image_url_list.append("http://47.112.218.7/api_shop/img/"+products_image_obj.image_url)
+            image_url_list.append("http://47.112.218.7/api_shop/img/"+products_image_obj.image_url.name)
 
         if len(image_url_list) == 0:
             image_url_list.append(products_one.product_img_url)
