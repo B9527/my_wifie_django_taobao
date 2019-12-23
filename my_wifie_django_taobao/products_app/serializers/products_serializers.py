@@ -20,7 +20,10 @@ class ProductsSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_product_img_url(obj):
-        return local_url_host + obj.product_img_url.name
+        if "http" in obj.product_img_url.name:
+            return obj.product_img_url.name
+        else:
+            return local_url_host + obj.product_img_url.name
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -38,4 +41,7 @@ class ProductsAllSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_product_img_url(obj):
-        return local_url_host + obj.product_img_url.name
+        if "http" in obj.product_img_url.name:
+            return obj.product_img_url.name
+        else:
+            return local_url_host + obj.product_img_url.name
