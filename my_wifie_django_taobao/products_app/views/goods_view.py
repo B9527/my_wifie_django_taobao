@@ -67,7 +67,7 @@ class GoodsDetailView(View):
             image_url_list.append(local_url_host+products_image_obj.image_url.name)
 
         if len(image_url_list) == 0:
-            image_url_list.append(products_one.product_img_url)
+            image_url_list.append(local_url_host + products_one.product_img_url.name)
         return_data = {"goods_data": goods_data, "p_id": p_id,
                        'image_url_list': image_url_list}
         return JsonResponse(return_data)
