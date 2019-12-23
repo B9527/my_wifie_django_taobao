@@ -7,6 +7,8 @@ __mtime__ = '2019/12/4'
 """
 from django.http import HttpResponse
 from django.http import JsonResponse
+
+from myshop.settings import local_url_host
 from products_app.models import Products, Category, ProductsImage
 from django.views import View
 from products_app.serializers.products_serializers import ProductsSerializer, CategorySerializer, ProductsAllSerializer
@@ -62,7 +64,7 @@ class GoodsDetailView(View):
 
         products_image_list = ProductsImage.objects.filter(product_id=p_id)
         for products_image_obj in products_image_list:
-            image_url_list.append("http://47.112.218.7/api_shop/img/"+products_image_obj.image_url.name)
+            image_url_list.append(local_url_host+products_image_obj.image_url.name)
 
         if len(image_url_list) == 0:
             image_url_list.append(products_one.product_img_url)

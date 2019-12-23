@@ -42,7 +42,7 @@ class Products(models.Model):
     product_uprice = models.DecimalField(max_digits=7, decimal_places=2, null=True, help_text="商品原来价格")
     product_num = models.IntegerField(help_text="商品数量")  # 商品数量
     product_detail = models.TextField(help_text="商品描述")  # 商品描述
-    product_img_url = models.CharField(max_length=500, help_text="商品主图")  # 商品主图
+    product_img_url = models.ImageField(upload_to='shop_image', verbose_name='商品主图', null=True)  # 商品主图
     category_id = models.ForeignKey("Category", models.SET_NULL, null=True)  # 分类id
     is_store = models.IntegerField('是否现货', choices=store_status, default=0)
     is_on = models.IntegerField('是否上架', choices=is_on_status, default=1)
