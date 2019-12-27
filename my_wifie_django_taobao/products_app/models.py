@@ -1,8 +1,5 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-
 
 class Category(models.Model):
     """
@@ -72,3 +69,8 @@ class ProductsImage(models.Model):
         verbose_name = '商品图片'
         verbose_name_plural = '商品图片'
         db_table = "product_image"
+
+
+class OrderModel(models.Model):
+    pass
+
